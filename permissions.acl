@@ -1,7 +1,7 @@
 /**
  * Sample access control list.
  */
- 
+
 rule SystemACL {
   description:  "System ACL to permit all access"
   participant: "org.hyperledger.composer.system.Participant"
@@ -23,5 +23,48 @@ rule NetworkAdminSystem {
     participant: "org.hyperledger.composer.system.NetworkAdmin"
     operation: ALL
     resource: "org.hyperledger.composer.system.**"
+    action: ALLOW
+}
+
+rule ClientCanCreateAds {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.carads.Client"
+    operation: CREATE
+    resource: "org.carads.Ads"
+    action: ALLOW
+}
+
+rule ClientCanSubmitAdsPreparationDeposit {
+  description: "Allow client to create AccountTransfer transactions"
+  participant(c): "org.carads.Client"
+  operation: CREATE
+  resource(t): "org.carads.AdsPreparationDeposit"
+  condition: (c.getIdentifier() == t.owner.getIdentifier())
+  action: ALLOW
+}
+
+rule ClientCanReadAdsPreparationDeposit {
+  description: " Clients can read accounts during transaction"
+  participant: "org.carads.Client"
+  operation: READ, UPDATE
+  resource: "org.carads.Account"
+  transaction: "org.carads.AdsPreparationDeposit"
+  action: ALLOW
+}
+
+rule ClientCanReadAds {
+    description: "Grant business network administrators full access to system resources"
+    participant(c): "org.carads.Client"
+    operation: READ
+    resource(a): "org.carads.Ads"
+    condition: (c.getIdentifier() == a.owner.getIdentifier())
+    action: ALLOW
+}
+
+rule SupplierCanReadAds {
+    description: "Grant business network administrators full access to system resources"
+    participant: "org.carads.Supplier"
+    operation: READ
+    resource: "org.carads.Ads"
     action: ALLOW
 }

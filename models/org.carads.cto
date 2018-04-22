@@ -11,7 +11,12 @@ participant Client identified by clientId {
   o String email
   o String nationalCardImage
   o String nationalId
+}
+
+asset Account identified by accountId {
+  o String accountId
   o Double balance
+  --> Customer owner
 }
 
 participant Supplier identified by supplierId {
@@ -21,7 +26,6 @@ participant Supplier identified by supplierId {
   o String email
   o String nationalCardImage
   o String nationalId
-  o Double balance
 }
 
 participant Driver identified by driverId {
@@ -31,14 +35,13 @@ participant Driver identified by driverId {
   o String email
   o String nationalCardImage
   o String nationalId
-  o Double balance
 }
+
 /* EscrowContract is created to hold deposit of all participants*/
 participant EscrowContract identified by contractId {
   o String contractId
   o Double balance
 }
-
 
 asset Car identified by carId {
   o String carId
