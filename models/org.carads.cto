@@ -1,0 +1,106 @@
+/**
+ * Write your model definitions here
+ */
+
+namespace org.carads
+
+participant Client identified by clientId {
+  o String clientId
+  o String company
+  o String name
+  o String email
+  o String nationalCardImage
+  o String nationalId
+  o Double balance
+}
+
+participant Supplier identified by supplierId {
+  o String supplierId
+  o String company
+  o String name
+  o String email
+  o String nationalCardImage
+  o String nationalId
+  o Double balance
+}
+
+participant Driver identified by driverId {
+  o String driverId
+  --> Car car
+  o String name 
+  o String email
+  o String nationalCardImage
+  o String nationalId
+  o Double balance
+}
+/* EscrowContract is created to hold deposit of all participants*/
+participant EscrowContract identified by contractId {
+  o String contractId
+  o Double balance
+}
+
+
+asset Car identified by carId {
+  o String carId
+  o String model
+  o String plateNumber
+}
+
+asset Ads identified by adsId {
+  o String adsId
+  --> Client owner
+  o String description
+  o String bannerUrl
+  o String fromDate
+  o String kickOffDate
+  o String toDate
+  o String area
+  o Integer minNumberOfCar /* The contract is ready to change to Execution phase */
+  o Integer maxNumberOfCar
+  o Double travelDistance
+  o Double price
+}
+/* A contract is created whenever a supplier accept a Ads.
+   Contract has 2 phases:
+   - Preparation. 
+      Criteria: 
+        Evidence include: 
+          An image
+          A list of driver. 
+      Deposit will be returned to client if criteria are not reached
+   - Execution
+ */
+asset AdsContract identified by adsContractId {
+  o String adsContractId
+  o String expireDate
+  --> Ads ads
+  --> Supplier supplier
+  o String depositTx /* Null means no supplier accept */
+  o String[] driverSupplierTx
+  o String supplierClientExecutionTx /** Execution Desposit Transaction from Supplier to Client */
+}
+
+transaction AdsPreparationDeposit {
+  --> Client owner
+  --> Supplier supplier
+  o Double value
+}
+
+
+// This Escrow contract is always apply for Supplier deposit to Execution phase of the contract
+transaction ExecutionDepositClientAndSupplier { 
+  --> Client client
+  --> Supplier supplier
+  --> EscrowContract contract
+  o Double supplierValue // 10% of total payment of
+}
+
+// This Escrow contract is always apply for Supplier and Driver deposit to Execution phase of the contract
+transaction ExecutionDepositSupplierAndDriver {
+  --> Driver driver
+  --> Supplier supplier
+  --> EscrowContract contract
+  o Double driverValue // 10% of final payment for Driver
+  o Double supplierValue // 100% of final payment
+}
+

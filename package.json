@@ -1,0 +1,40 @@
+{
+  "name": "carads",
+  "version": "0.0.1",
+  "description": "A platform where Client, Supplier, and Car owners do ads on Car",
+  "scripts": {
+    "bdd": "cucumber-js",
+    "test": "nyc mocha -t 0 test/*.js",
+    "setup": "npm run clean-composer ; npm run reset-fabric && npm run start-fabric && npm run create-peeradmin && npm run init && npm run start-network && npm run import-card && npm run ping-network",
+    "clean-docker": "docker stop $(docker images -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)",
+    "clean-composer": "rm -rf $HOME/.composer",
+    "reset-fabric": "cd fabric-tools ./stopFabric.sh && ./teardownFabric.sh && printf '1\n' | ./teardownAllDocker.sh",
+    "start-fabric": "cd fabric-tools && ./startFabric.sh",
+    "create-peeradmin": "fabric-tools/./createPeerAdminCard.sh",
+    "init": "rm *.bna ; rm *.card ; composer archive create --sourceType dir --sourceName . && composer network install --card PeerAdmin@hlfv1 --archiveFile carads@$npm_package_version.bna",
+    "start-network": "composer network start --networkName carads --networkVersion $npm_package_version --networkAdmin admin --networkAdminEnrollSecret adminpw --card PeerAdmin@hlfv1",
+    "import-card": "composer card import -f admin@carads.card",
+    "ping-network": "composer network ping -c admin@carads",
+    "upgrade": "rm *.bna ; composer archive create --sourceType dir --sourceName . && composer network install --card PeerAdmin@hlfv1 --archiveFile carads@$npm_package_version.bna && composer network upgrade --networkName carads --networkVersion $npm_package_version --card PeerAdmin@hlfv1",
+    "rest": "composer-rest-server -c admin@carads -n always -a false -w true -t false",
+    "playground": "composer-playground"
+  },
+  "author": "Group1_BC_2018",
+  "email": "dnncntt@gmail.com",
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "composer-admin": "^0.19.0",
+    "composer-cli": "^0.19.0",
+    "composer-client": "^0.19.0",
+    "composer-common": "^0.19.0",
+    "composer-connector-embedded": "^0.19.0",
+    "composer-cucumber-steps": "^0.19.0",
+    "chai": "latest",
+    "chai-as-promised": "latest",
+    "cucumber": "^2.2.0",
+    "eslint": "latest",
+    "nyc": "latest",
+    "mkdirp": "latest",
+    "mocha": "latest"
+  }
+}
