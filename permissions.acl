@@ -40,7 +40,16 @@ rule ClientCanSubmitAdsPreparationDeposit {
   participant(c): "org.carads.Consumer"
   operation: CREATE
   resource(t): "org.carads.AdsPreparationDeposit"
-  condition: (c.getIdentifier() == t.owner.getIdentifier() && c.type == 'client')
+  condition: (c.type == 'client')
+  action: ALLOW
+}
+
+rule OwnerCanOnlyReadTheirAccount {
+  description: "Allow customers to read their account"
+  participant(c): "org.carads.Consumer"
+  operation: READ
+  resource(a): "org.carads.Account"
+  condition: (c.getIdentifier() == a.owner.getIdentifier())
   action: ALLOW
 }
 

@@ -68,24 +68,24 @@ asset AdsContract identified by adsContractId {
 }
 
 transaction AdsPreparationDeposit {
-  --> Consumer owner
-  --> Consumer supplier
+  --> Account owner
+  --> Account supplier
   o Double value
 }
 
 
 // This Escrow contract is always apply for Consumer deposit to Execution phase of the contract
 transaction ExecutionDeposit {
-  --> Consumer client
-  --> Consumer supplier
+  --> Account client
+  --> Account supplier
   --> EscrowContract contract
   o Double SupplierValue // 10% of total payment of
 }
 
 // This Escrow contract is always apply for Consumer and Driver deposit to Execution phase of the contract
 transaction ExecutionDepositConsumerAndDriver {
-  --> Consumer driver
-  --> Consumer supplier
+  --> Account driver
+  --> Account supplier
   --> EscrowContract contract
   o Double driverValue // 10% of final payment for Driver
   o Double supplierValue // 100% of final payment
