@@ -4,37 +4,20 @@
 
 namespace org.carads
 
-participant Client identified by clientId {
-  o String clientId
+participant Consumer identified by consumerId {
+  o String consumerId
   o String company
   o String name
   o String email
   o String nationalCardImage
   o String nationalId
+  o String type  // Type: Consumer, Consumer, driver
 }
 
 asset Account identified by accountId {
   o String accountId
   o Double balance
-  --> Customer owner
-}
-
-participant Supplier identified by supplierId {
-  o String supplierId
-  o String company
-  o String name
-  o String email
-  o String nationalCardImage
-  o String nationalId
-}
-
-participant Driver identified by driverId {
-  o String driverId
-  --> Car car
-  o String name 
-  o String email
-  o String nationalCardImage
-  o String nationalId
+  --> Consumer owner
 }
 
 /* EscrowContract is created to hold deposit of all participants*/
@@ -47,11 +30,12 @@ asset Car identified by carId {
   o String carId
   o String model
   o String plateNumber
+  --> Consumer owner
 }
 
 asset Ads identified by adsId {
   o String adsId
-  --> Client owner
+  --> Consumer owner
   o String description
   o String bannerUrl
   o String fromDate
@@ -63,45 +47,45 @@ asset Ads identified by adsId {
   o Double travelDistance
   o Double price
 }
-/* A contract is created whenever a supplier accept a Ads.
+/* A contract is created whenever a Consumer accept a Ads.
    Contract has 2 phases:
-   - Preparation. 
-      Criteria: 
-        Evidence include: 
+   - Preparation.
+      Criteria:
+        Evidence include:
           An image
-          A list of driver. 
-      Deposit will be returned to client if criteria are not reached
+          A list of driver.
+      Deposit will be returned to Consumer if criteria are not reached
    - Execution
  */
 asset AdsContract identified by adsContractId {
   o String adsContractId
   o String expireDate
   --> Ads ads
-  --> Supplier supplier
-  o String depositTx /* Null means no supplier accept */
-  o String[] driverSupplierTx
-  o String supplierClientExecutionTx /** Execution Desposit Transaction from Supplier to Client */
+  --> Consumer Consumer
+  o String depositTx /* Null means no Consumer accept */
+  o String[] driverConsumerTx
+  o String ExecutionTx /** Execution Desposit Transaction from Consumer to Consumer */
 }
 
 transaction AdsPreparationDeposit {
-  --> Client owner
-  --> Supplier supplier
+  --> Consumer owner
+  --> Consumer supplier
   o Double value
 }
 
 
-// This Escrow contract is always apply for Supplier deposit to Execution phase of the contract
-transaction ExecutionDepositClientAndSupplier { 
-  --> Client client
-  --> Supplier supplier
+// This Escrow contract is always apply for Consumer deposit to Execution phase of the contract
+transaction ExecutionDeposit {
+  --> Consumer client
+  --> Consumer supplier
   --> EscrowContract contract
-  o Double supplierValue // 10% of total payment of
+  o Double SupplierValue // 10% of total payment of
 }
 
-// This Escrow contract is always apply for Supplier and Driver deposit to Execution phase of the contract
-transaction ExecutionDepositSupplierAndDriver {
-  --> Driver driver
-  --> Supplier supplier
+// This Escrow contract is always apply for Consumer and Driver deposit to Execution phase of the contract
+transaction ExecutionDepositConsumerAndDriver {
+  --> Consumer driver
+  --> Consumer supplier
   --> EscrowContract contract
   o Double driverValue // 10% of final payment for Driver
   o Double supplierValue // 100% of final payment

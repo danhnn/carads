@@ -28,42 +28,34 @@ rule NetworkAdminSystem {
 
 rule ClientCanCreateAds {
     description: "Grant business network administrators full access to system resources"
-    participant: "org.carads.Client"
+    participant(c): "org.carads.Consumer"
     operation: CREATE
     resource: "org.carads.Ads"
+    condition: (c.type == 'client')
     action: ALLOW
 }
 
 rule ClientCanSubmitAdsPreparationDeposit {
   description: "Allow client to create AccountTransfer transactions"
-  participant(c): "org.carads.Client"
+  participant(c): "org.carads.Consumer"
   operation: CREATE
   resource(t): "org.carads.AdsPreparationDeposit"
-  condition: (c.getIdentifier() == t.owner.getIdentifier())
+  condition: (c.getIdentifier() == t.owner.getIdentifier() && c.type == 'client')
   action: ALLOW
 }
 
 rule ClientCanReadAdsPreparationDeposit {
   description: " Clients can read accounts during transaction"
-  participant: "org.carads.Client"
+  participant: "org.carads.Consumer"
   operation: READ, UPDATE
   resource: "org.carads.Account"
   transaction: "org.carads.AdsPreparationDeposit"
   action: ALLOW
 }
 
-rule ClientCanReadAds {
+rule EverybodyCanReadAds {
     description: "Grant business network administrators full access to system resources"
-    participant(c): "org.carads.Client"
-    operation: READ
-    resource(a): "org.carads.Ads"
-    condition: (c.getIdentifier() == a.owner.getIdentifier())
-    action: ALLOW
-}
-
-rule SupplierCanReadAds {
-    description: "Grant business network administrators full access to system resources"
-    participant: "org.carads.Supplier"
+    participant: "org.carads.*"
     operation: READ
     resource: "org.carads.Ads"
     action: ALLOW
