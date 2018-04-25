@@ -27,20 +27,20 @@ rule NetworkAdminSystem {
 }
 
 rule ClientCanCreateAds {
-    description: "Grant business network administrators full access to system resources"
+    description: "Only consumer type client create ads"
     participant(c): "org.carads.Consumer"
     operation: CREATE
     resource: "org.carads.Ads"
-    condition: (c.type == 'client')
+    condition: (c.type == "client")
     action: ALLOW
 }
 
 rule SupplierCanCreateAndUpdateAdsContract {
-    description: "Grant business network administrators full access to system resources"
+    description: "Supplier can create ads contract by accepting an Ads"
     participant(c): "org.carads.Consumer"
-    operation: CREATE, UPDATE
+    operation: CREATE, UPDATE, READ
     resource: "org.carads.AdsContract"
-    condition: (c.type == 'supplier')
+    condition: (c.type == "supplier")
     action: ALLOW
 }
 
@@ -49,7 +49,7 @@ rule ClientCanSubmitAdsPreparationDeposit {
   participant(c): "org.carads.Consumer"
   operation: CREATE
   resource(t): "org.carads.AdsPreparationDeposit"
-  condition: (c.type == 'client')
+  condition: (c.type == "client")
   action: ALLOW
 }
 
@@ -72,9 +72,26 @@ rule ClientCanReadAdsPreparationDeposit {
 }
 
 rule EverybodyCanReadAds {
-    description: "Grant business network administrators full access to system resources"
+    description: "Ads are avaiable to all participant"
     participant: "org.carads.*"
     operation: READ
     resource: "org.carads.Ads"
+    action: ALLOW
+}
+
+rule ConsumerCanReadEscrowContract {
+    description: "Consumer are able to create escrow contracts"
+    participant: "org.carads.*"
+    operation: CREATE
+    resource: "org.carads.EscrowContract"
+    action: ALLOW
+}
+
+rule DriverSupplierCanCreateUpdateExecutionDepositSupplierAndDriver {
+    description: ""
+    participant(c): "org.carads.Consumer"
+    operation: CREATE
+    resource: "org.carads.ExecutionDepositSupplierAndDriver"
+    condition: (c.type == 'driver' || c.type == 'supplier')
     action: ALLOW
 }
