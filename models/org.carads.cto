@@ -49,7 +49,7 @@ asset Ads identified by adsId {
   o Double travelDistance
   o Double price
 }
-/* A contract is created whenever a Consumer accept a Ads.
+/* A contract is created whenever a Supplier accept a Ads.
    Contract has 2 phases:
    - Preparation.
       Criteria:
