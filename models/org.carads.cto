@@ -21,7 +21,7 @@ asset Account identified by accountId {
 }
 
 /* EscrowContract is created to hold deposit of all participants*/
-participant EscrowContract identified by contractId {
+asset EscrowContract identified by contractId {
   o String contractId
   o Double balance
 
