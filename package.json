@@ -5,6 +5,7 @@
   "scripts": {
     "bdd": "cucumber-js",
     "test": "nyc mocha -t 0 test/*.js",
+    "web": "cd client && npm run dev",
     "setup": "npm run clean-composer ; npm run reset-fabric && npm run start-fabric && npm run create-peeradmin && npm run init && npm run start-network && npm run import-card && npm run ping-network",
     "clean-docker": "docker stop $(docker images -q) && docker rm $(docker ps -a -q) && docker rmi $(docker images -q)",
     "clean-composer": "rm -rf $HOME/.composer",

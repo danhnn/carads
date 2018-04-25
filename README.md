@@ -18,6 +18,8 @@ https://docs.google.com/document/d/1q3ed1mm5h5RALhsckbg3r2xVG_zgCXv0t4ILe-A40lM/
 
 3. `npm run playground` : run playground
 
+4. `npm run web` : run web client in port 8080
+
 # Normal way:
 
 1. `npm run clean-composer` : remove composer folder then we can have fresh installation.
@@ -37,6 +39,8 @@ https://docs.google.com/document/d/1q3ed1mm5h5RALhsckbg3r2xVG_zgCXv0t4ILe-A40lM/
 8. `npm run rest` : run rest server. That script will auto input all params we need for up and run our rest server.
 
 9. `npm run playground` : run playground
+
+10. `npm run web` : run web client in port 8080
 # Upgrade current code:
 
  1. Increase version in package.json file
