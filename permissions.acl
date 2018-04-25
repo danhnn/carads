@@ -95,3 +95,23 @@ rule DriverSupplierCanCreateUpdateExecutionDepositSupplierAndDriver {
     condition: (c.type == 'driver' || c.type == 'supplier')
     action: ALLOW
 }
+
+rule DriverSupplierCanReadAccount {
+    description: ""
+    participant(c): "org.carads.Consumer"
+    operation: READ, UPDATE
+    resource: "org.carads.Account"
+    transaction: "org.carads.ExecutionDepositSupplierAndDriver"
+    condition: (c.type == 'driver' || c.type == 'supplier')
+    action: ALLOW
+}
+
+rule DriverSupplierCanReadEscrowContract {
+    description: ""
+    participant(c): "org.carads.Consumer"
+    operation: READ, UPDATE
+    resource: "org.carads.EscrowContract"
+    transaction: "org.carads.ExecutionDepositSupplierAndDriver"
+    condition: (c.type == 'driver' || c.type == 'supplier')
+    action: ALLOW
+}
