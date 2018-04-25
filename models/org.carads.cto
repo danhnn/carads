@@ -37,7 +37,7 @@ asset Car identified by carId {
 asset Ads identified by adsId {
   o String adsId
   --> Consumer owner
-  --> AdsContract contract
+  --> AdsContract contract optional
   o String description
   o String bannerUrl
   o String fromDate
@@ -72,8 +72,9 @@ asset AdsContract identified by adsContractId {
 transaction AdsPreparationDeposit {
   --> Account owner
   --> Account supplier
-  o Double value
+  o Double value // 30% of ads' price
 }
+
 
 
 // This Escrow contract is always apply for Supplier deposit to Execution phase of the contract
@@ -85,12 +86,40 @@ transaction ExecutionDeposit {
   o Double clientValue // 70% of total payment of Ads
 }
 
+/** Two following transactions are created in following circumstances:
+      - Supplier failed to fullfill contracts - EscrowContract's balance is returned to client
+      - Supplier finish fillkill contracts - EscrowContract's balance is sent to supplier's balance
+*/
+transaction ExecutionFailedWidthdrawal {
+  --> Account supplier
+  --> EscrowContract contract
+}
+
+transaction ExecutionSuccessWidthdrawal {
+  --> Account client
+  --> EscrowContract contract
+}
+
 // This Escrow contract is always apply for Supplier and Driver deposit to Execution phase of the contract
 transaction ExecutionDepositSupplierAndDriver {
   --> Account driver
   --> Account supplier
   --> EscrowContract contract
   o Double driverValue // 10% of final payment for Driver
-  o Double supplierValue // 100% of final payment
+  o Double supplierValue // 100% of final payment (70% of Ads' price)
+}
+
+/** This transaction is created in 2 following circumstances:
+      - Supplier failed to fullfill contracts - EscrowContract's balance is returned to client
+      - Supplier finish fillkill contracts - EscrowContract's balance is sent to supplier's balance
+*/
+transaction ExecutionDepositSupplierAndDriverFailedWidthdrawal {
+  --> Account supplier
+  --> EscrowContract contract
+}
+
+transaction ExecutionDepositSupplierAndDriverSuccessWidthdrawal {
+  --> Account driver
+  --> EscrowContract contract
 }
 
