@@ -24,7 +24,7 @@ asset Account identified by accountId {
 participant EscrowContract identified by contractId {
   o String contractId
   o Double balance
-  
+
 }
 
 asset Car identified by carId {
@@ -65,7 +65,7 @@ asset AdsContract identified by adsContractId {
   --> Consumer supplier
   o String depositTx /* Null means no Supplier accept */
   o String[] driverSupplierTx /* list of transaction driver has deposit to accept the Ads */
-  o String ExecutionTx /* Execution Desposit Transaction from Supplier to Client */
+  o String executionTx /* Execution Desposit Transaction from Supplier to Client */
 }
 
 /* Deposit from Client to Supplier */
@@ -81,7 +81,8 @@ transaction ExecutionDeposit {
   --> Account client
   --> Account supplier
   --> EscrowContract contract
-  o Double value // 10% of total payment of Ads
+  o Double supplierValue // 10% of total payment of Ads
+  o Double clientValue // 70% of total payment of Ads
 }
 
 // This Escrow contract is always apply for Supplier and Driver deposit to Execution phase of the contract
