@@ -35,6 +35,15 @@ rule ClientCanCreateAds {
     action: ALLOW
 }
 
+rule SupplierCanCreateAndUpdateAdsContract {
+    description: "Grant business network administrators full access to system resources"
+    participant(c): "org.carads.Consumer"
+    operation: CREATE, UPDATE
+    resource: "org.carads.AdsContract"
+    condition: (c.type == 'supplier')
+    action: ALLOW
+}
+
 rule ClientCanSubmitAdsPreparationDeposit {
   description: "Allow client to create AccountTransfer transactions"
   participant(c): "org.carads.Consumer"
