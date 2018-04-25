@@ -62,23 +62,27 @@ Feature: sample
   Scenario: Full Scenario
     When I use the identity ClientPg
     And I add the following asset of type org.carads.Ads
-      | adsId                                | owner                                | contract  | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
-      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | contracId | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
+      | adsId                                | owner                                  | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
+      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b   | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
     Then I should have the following assets of type org.carads.Ads
-      | adsId                                | owner                                | contract  | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
-      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | contracId | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
+      | adsId                                | owner                                | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
+      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
     And I use the identity SupplierGrab
     Then I should have the following assets of type org.carads.Ads
-      | adsId                                | owner                                | contract  | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
-      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | contracId | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
+      | adsId                                | owner                                | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
+      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
     And I use the identity DriverHari
     Then I should have the following assets of type org.carads.Ads
-      | adsId                                | owner                                | contract  | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
-      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | contracId | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
+      | adsId                                | owner                                | description           | bannerUrl       | fromDate   | kickOffDate | toDate     | area           | minNumberOfCar | maxNumberOfCar | travelDistance | price   |
+      | 57934d92-45f6-11e8-842f-0ed5f89f718b | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | I need 2 cars for Ads | PandGBanner.jpg | 2017-05-11 | 2017-05-18  | 2017-07-01 | Hochiminh city | 2              | 2              | 2100           | 5000000 |
     And I use the identity SupplierGrab
-    Then I add the following asset
+    Given I have added the following asset
       """
-      {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b", "depositTx":"depositTx","driverSupplierTx":["tx1","tx2"],"ExecutionTx":"ExecutionTx"}
+      {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b"}
+      """
+    Then I should have the following asset
+      """
+      {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b"}
       """
     And I use the identity ClientPg
     Then I submit the following transaction of type org.carads.AdsPreparationDeposit
@@ -93,18 +97,18 @@ Feature: sample
       | 3         | 76bd1c3a-45f5-11e8-842f-0ed5f89f718b | 101500000 |
     Then I update the following asset
       """
-      {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b", "depositTx":"9b94eb98-4841-11e8-842f-0ed5f89f718b","driverSupplierTx":["tx1","tx2"],"ExecutionTx":"ExecutionTx"}
+      {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b"}
       """
     Then I should have the following asset
       """
-      {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b", "depositTx":"9b94eb98-4841-11e8-842f-0ed5f89f718b","driverSupplierTx":["tx1","tx2"],"ExecutionTx":"ExecutionTx"}
+      {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b"}
       """
     And I use the identity SupplierGrab
     And I add the following asset of type org.carads.EscrowContract
       | contractId                           | balance |
       | 7e0b9846-4847-11e8-842f-0ed5f89f718b | 0       |
     Then I submit the following transaction of type org.carads.ExecutionDepositSupplierAndDriver
-      | driver | supplier | contract                             | driverValueue | supplierValue |
+      | driver | supplier | contract                             | driverValue | supplierValue |
       | 5      | 3        | 7e0b9846-4847-11e8-842f-0ed5f89f718b | 500000        | 5000000       |
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
@@ -118,7 +122,7 @@ Feature: sample
       | contractId                           | balance |
       | 72ce6e06-4847-11e8-842f-0ed5f89f718b | 0       |
     Then I submit the following transaction of type org.carads.ExecutionDepositSupplierAndDriver
-      | driver | supplier | contract                             | driverValueue | supplierValue |
+      | driver | supplier | contract                             | driverValue | supplierValue |
       | 6      | 3        | 72ce6e06-4847-11e8-842f-0ed5f89f718b | 500000        | 5000000       |
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
@@ -148,8 +152,4 @@ Feature: sample
     Then I update the following asset
       """
       {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b", "depositTx":"9b94eb98-4841-11e8-842f-0ed5f89f718b","driverSupplierTx":["b161b236-484a-11e8-842f-0ed5f89f718b","b8ec0538-484a-11e8-842f-0ed5f89f718b"],"ExecutionTx":"aad6b762-484b-11e8-842f-0ed5f89f718b"}
-
-
-
-
-
+      """

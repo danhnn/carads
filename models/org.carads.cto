@@ -11,7 +11,7 @@ participant Consumer identified by consumerId {
   o String email
   o String nationalCardImage
   o String nationalId
-  o String type  // Type: Consumer, Consumer, driver
+  o String type  // Type: Consumer, supplier, driver
 }
 
 asset Account identified by accountId {
@@ -63,9 +63,9 @@ asset AdsContract identified by adsContractId {
   o String adsContractId
   o String expireDate
   --> Consumer supplier
-  o String depositTx /* Null means no Supplier accept */
-  o String[] driverSupplierTx /* list of transaction driver has deposit to accept the Ads */
-  o String executionTx /* Execution Desposit Transaction from Supplier to Client */
+  o String depositTx optional /* Null means no Supplier accept */
+  o String[] driverSupplierTx optional /* list of transaction driver has deposit to accept the Ads */
+  o String executionTx optional /* Execution Desposit Transaction from Supplier to Client */
 }
 
 /* Deposit from Client to Supplier */
