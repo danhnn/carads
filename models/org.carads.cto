@@ -49,7 +49,7 @@ asset Ads identified by adsId {
   o Double travelDistance
   o Double price
 }
-/* A contract is created whenever a Consumer accept a Ads.
+/* A contract is created whenever a Supplier accept a Ads.
    Contract has 2 phases:
    - Preparation.
       Criteria:
@@ -72,16 +72,17 @@ asset AdsContract identified by adsContractId {
 transaction AdsPreparationDeposit {
   --> Account owner
   --> Account supplier
-  o Double value
+  o Double value // 30% of ads' price
 }
-
+ 
 
 // This Escrow contract is always apply for Supplier deposit to Execution phase of the contract
 transaction ExecutionDeposit {
   --> Account client
   --> Account supplier
   --> EscrowContract contract
-  o Double value // 10% of total payment of Ads
+  o Double supplierValue // 10% of total payment of Ads
+  o Double clientValue // 70% of total payment of Ads
 }
 
 // This Escrow contract is always apply for Supplier and Driver deposit to Execution phase of the contract
