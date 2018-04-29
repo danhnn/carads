@@ -44,6 +44,15 @@ rule SupplierCanCreateAndUpdateAdsContract {
     action: ALLOW
 }
 
+rule ClientCreateAndUpdateAdsContract {
+    description: "Supplier can create ads contract by accepting an Ads"
+    participant(c): "org.carads.Consumer"
+    operation: UPDATE
+    resource: "org.carads.AdsContract"
+    condition: (c.type == "client")
+    action: ALLOW
+}
+
 rule ClientCanSubmitAdsPreparationDeposit {
   description: "Allow client to create AccountTransfer transactions"
   participant(c): "org.carads.Consumer"
@@ -112,6 +121,35 @@ rule DriverSupplierCanReadEscrowContract {
     operation: READ, UPDATE
     resource: "org.carads.EscrowContract"
     transaction: "org.carads.ExecutionDepositSupplierAndDriver"
+    condition: (c.type == 'driver' || c.type == 'supplier')
+    action: ALLOW
+}
+
+rule SupplierCanCreateUpdateExecutionDeposit {
+    description: ""
+    participant(c): "org.carads.Consumer"
+    operation: CREATE
+    resource: "org.carads.ExecutionDeposit"
+    condition: (c.type == 'client' || c.type == 'supplier')
+    action: ALLOW
+}
+
+rule ClientSupplierCanReadAccount {
+    description: ""
+    participant(c): "org.carads.Consumer"
+    operation: READ, UPDATE
+    resource: "org.carads.Account"
+    transaction: "org.carads.ExecutionDeposit"
+    condition: (c.type == 'client' || c.type == 'supplier')
+    action: ALLOW
+}
+
+rule ClientSupplierCanReadEscrowContract {
+    description: ""
+    participant(c): "org.carads.Consumer"
+    operation: READ, UPDATE
+    resource: "org.carads.EscrowContract"
+    transaction: "org.carads.ExecutionDeposit"
     condition: (c.type == 'driver' || c.type == 'supplier')
     action: ALLOW
 }

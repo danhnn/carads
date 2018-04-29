@@ -109,14 +109,14 @@ Feature: sample
       | 7e0b9846-4847-11e8-842f-0ed5f89f718b | 0       |
     Then I submit the following transaction of type org.carads.ExecutionDepositSupplierAndDriver
       | driver | supplier | contract                             | driverValue | supplierValue |
-      | 5      | 3        | 7e0b9846-4847-11e8-842f-0ed5f89f718b | 500000        | 5000000       |
+      | 5      | 3        | 7e0b9846-4847-11e8-842f-0ed5f89f718b | 500000      | 5000000       |
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
-      | 3         | 76bd1c3a-45f5-11e8-842f-0ed5f89f718b | 198500000 |
+      | 3         | 76bd1c3a-45f5-11e8-842f-0ed5f89f718b | 96500000 |
     And I use the identity DriverDat
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
-      | 5         | 895af98e-45f5-11e8-842f-0ed5f89f718b | 101500000 |
+      | 5         | 895af98e-45f5-11e8-842f-0ed5f89f718b | 1500000 |
     And I use the identity SupplierGrab
     And I add the following asset of type org.carads.EscrowContract
       | contractId                           | balance |
@@ -126,11 +126,11 @@ Feature: sample
       | 6      | 3        | 72ce6e06-4847-11e8-842f-0ed5f89f718b | 500000        | 5000000       |
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
-      | 3         | 72ce6e06-45f5-11e8-842f-0ed5f89f718b | 198500000 |
-    And I use the identity DriverDat
+      | 3         | 76bd1c3a-45f5-11e8-842f-0ed5f89f718b | 91500000 |
+    And I use the identity DriverHari
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
-      | 6         | 895afc4a-45f5-11e8-842f-0ed5f89f718b | 101500000 |
+      | 6         | 895afc4a-45f5-11e8-842f-0ed5f89f718b | 2500000 |
     And I use the identity SupplierGrab
     Then I update the following asset
       """
@@ -144,11 +144,11 @@ Feature: sample
       | 1      | 3        | f70da95c-484a-11e8-842f-0ed5f89f718b | 500000        | 3500000     |
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
-      | 3         | 72ce6e06-45f5-11e8-842f-0ed5f89f718b | 101500000 |
+      | 3         | 76bd1c3a-45f5-11e8-842f-0ed5f89f718b | 91000000 |
     And I use the identity ClientPg
     Then I should have the following assets of type org.carads.Account
       | accountId | owner                                | balance   |
-      | 1         | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | 101500000 |
+      | 1         | 5c6745b8-45f5-11e8-842f-0ed5f89f718b | 195000000 |
     Then I update the following asset
       """
       {"$class":"org.carads.AdsContract", "adsContractId":"894c5358-4833-11e8-842f-0ed5f89f718b", "expireDate":"2017-05-13", "supplier":"76bd1c3a-45f5-11e8-842f-0ed5f89f718b", "depositTx":"9b94eb98-4841-11e8-842f-0ed5f89f718b","driverSupplierTx":["b161b236-484a-11e8-842f-0ed5f89f718b","b8ec0538-484a-11e8-842f-0ed5f89f718b"],"ExecutionTx":"aad6b762-484b-11e8-842f-0ed5f89f718b"}
